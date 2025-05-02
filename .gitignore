@@ -1,0 +1,27 @@
+# IDE va Virtual Environment fayllari
+.idea/
+.venv/
+payment-venv/
+
+
+
+# Source papkasini chiqarib tashlash (faqat muhim fayllarni saqlash)
+# Butun `src/` ni Git’dan chiqarib tashlamang, agar kerakli fayllar bo‘lsa!
+/src/*
+
+# Log va media fayllar
+/logs/
+/media/
+
+# Python kesh va kompilyatsiya qilingan fayllar
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Django migrations
+**/migrations/
+!**/migrations/__init__.py
+
+.env
+/.env
