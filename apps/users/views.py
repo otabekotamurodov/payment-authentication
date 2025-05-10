@@ -5,10 +5,13 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 import random
 import traceback
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def generate_code(request):
     try:
         print("REQUEST DATA:", request.data)
@@ -36,6 +39,7 @@ def generate_code(request):
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def verify_code(request):
     telegram_id = request.data.get("telegram_id")
     code = request.data.get("code")

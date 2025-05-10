@@ -20,4 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.users.urls')),  # Bu orqali auth APIlar ishlaydi
+    path('api/account/', include('apps.accounts.urls')),
+    path('api/transactions/', include('apps.transactions.urls')),
+
+
 ]
