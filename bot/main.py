@@ -26,6 +26,7 @@ async def start_handler(message: Message):
         }) as resp:
             if resp.status == 200:
                 await message.answer(
+                    f"<b>Telegram ID:</b>\n<code>{telegram_id}</code>\n\n"
                     f"<b>Telegram orqali login kodi:</b>\n<code>{code}</code>\n\nKod 5 daqiqa amal qiladi.")
             else:
                 await message.answer("Xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.")
