@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i=-w+hcu*-h(1aex8)+vi#+pt#bve)70_^78^*)w9p36d*epa9'
+SECRET_KEY = 'django-insecure-e1+$6v^r+c%_vi2efh(()m$c7=q73eu(g$(gg-b$sycv)*g^qp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'apps.users',
+    'apps.accounts',
     'apps.transactions',
-    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -76,16 +77,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "payment_authentication",
-        "USER": "postgres",
-        "PASSWORD": "whizzer1@",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 
 # Password validation
