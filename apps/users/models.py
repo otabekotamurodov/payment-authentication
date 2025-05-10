@@ -44,4 +44,4 @@ class TelegramVerification(models.Model):
     is_used = models.BooleanField(default=False)
 
     def is_expired(self):
-        return self.created_at + timedelta(minutes=5) < timezone.now()
+        return self.created_at + timedelta(minutes=15) < timezone.now()
