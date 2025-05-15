@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+
+# Frontend ichidagi .env faylga yo'lni to'liq ko'rsatamiz
+load_dotenv(os.path.join(Path(__file__).resolve().parent.parent, '.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +30,8 @@ SECRET_KEY = 'django-insecure-e1+$6v^r+c%_vi2efh(()m$c7=q73eu(g$(gg-b$sycv)*g^qp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# ALLOWED_HOSTS = [os.getenv("API_URL").replace("https://", "")]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -39,6 +46,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.accounts',
     'apps.transactions',
+    'apps.web_authn',
     'corsheaders',
 ]
 
@@ -127,10 +135,8 @@ USE_TZ = True
 AUTH_USER_MODEL = 'users.User'
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]
-
+CORS_ALLOWED_ORIGINS = [os.getenv("FRONTEND_URL")]
+CSRF_TRUSTED_ORIGINS = [os.getenv("FRONTEND_URL")]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

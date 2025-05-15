@@ -16,5 +16,8 @@ class Transaction(models.Model):
     transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    type = models.CharField(max_length=20, default='transfer')
+    note = models.TextField(blank=True, null=True)
+
+def __str__(self):
         return f"{self.user.telegram_id} - {self.transaction_type} - {self.amount}"

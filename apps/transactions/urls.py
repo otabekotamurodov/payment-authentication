@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import TransactionListView
+from . import views
 
 urlpatterns = [
-    path('', TransactionListView.as_view(), name='transactions'),
+    path("request-transfer/", views.request_transfer, name="request_transfer"),
+    path("confirm-transfer/", views.confirm_transfer, name="confirm_transfer"),
 ]
+

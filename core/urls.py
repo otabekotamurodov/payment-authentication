@@ -22,6 +22,6 @@ urlpatterns = [
     path('api/', include('apps.users.urls')),  # Bu orqali auth APIlar ishlaydi
     path('api/account/', include('apps.accounts.urls')),
     path('api/transactions/', include('apps.transactions.urls')),
-
-
+    path("api/transactions/", include("apps.transactions.urls")),
+    path("api/webauthn/", include("apps.web_authn.urls")),
 ]
