@@ -65,3 +65,14 @@ def confirm_transfer(request):
     cache.delete(f"pending_transfer_{request.user.id}")  # Cache’dan o‘chirish
 
     return Response({"message": "Pul o'tkazildi!"}, status=200)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_transactions(request):
+    transactions = Transaction.objects.filter(user=request.user).order_by('-created_at')
+    return Response([{
+        "amount": float(t.amount),  # Decimal -> float ga o‘zgartirish
+        "type": t.type,
+        "note": t.note,
+        "date": t.created_at.isoformat()
+    } for t in transactions], status=200)

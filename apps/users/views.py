@@ -16,7 +16,7 @@ def generate_code(request):
 
         user, created = User.objects.get_or_create(
             telegram_id=telegram_id,
-            defaults={"phone_number": ""}  # phone_number bo‘sh qoldiriladi
+            defaults={"phone_number": ""}
         )
 
         code = str(random.randint(100000, 999999))
@@ -58,3 +58,17 @@ def verify_code(request):
         return Response({"error": "User not found"}, status=404)
     except Exception as e:
         return Response({"error": str(e)}, status=500)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def refresh_token(request):
+    refresh = request.data.get("refresh")
+    if not refresh:
+        return Response({"error": "Refresh token kerak"}, status=400)
+
+    try:
+        refresh_token = RefreshToken(refresh)
+        new_access_token = str(refresh_token.access_token)
+        return Response({"access": new_access_token}, status=200)
+    except Exception as e:
+        return Response({"error": "Refresh token noto‘g‘ri yoki eskirgan"}, status=400)

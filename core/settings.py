@@ -14,12 +14,10 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-
-# Frontend ichidagi .env faylga yo'lni to'liq ko'rsatamiz
-load_dotenv(os.path.join(Path(__file__).resolve().parent.parent, '.env'))
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(os.path.join(BASE_DIR, 'frontend', '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -30,8 +28,9 @@ SECRET_KEY = 'django-insecure-e1+$6v^r+c%_vi2efh(()m$c7=q73eu(g$(gg-b$sycv)*g^qp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = [os.getenv("API_URL").replace("https://", "")]
-ALLOWED_HOSTS = ["*"]
+FRONTEND_URL = os.getenv("VITE_FRONTEND_URL")
+API_URL = os.getenv("VITE_API_URL")
+ALLOWED_HOSTS = [API_URL.replace("https://", ""), FRONTEND_URL.replace("https://", "")]
 
 # Application definition
 
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     'apps.transactions',
     'apps.web_authn',
     'corsheaders',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -135,8 +135,8 @@ USE_TZ = True
 AUTH_USER_MODEL = 'users.User'
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [os.getenv("FRONTEND_URL")]
-CSRF_TRUSTED_ORIGINS = [os.getenv("FRONTEND_URL")]
+CORS_ALLOWED_ORIGINS = [FRONTEND_URL]
+CSRF_TRUSTED_ORIGINS = [FRONTEND_URL, API_URL]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

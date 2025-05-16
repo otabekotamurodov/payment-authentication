@@ -17,29 +17,29 @@ function DashboardPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!accessToken) {
-      console.warn("Access token yo‘q. Foydalanuvchi login qilmagan.");
-      navigate("/login");
-      return;
+  if (!accessToken) {
+    console.warn("Access token yo‘q. Foydalanuvchi login qilmagan.");
+    navigate("/login");
+    return;
+  }
+
+  const fetchData = async () => {
+    try {
+      const [balanceRes, transRes] = await Promise.all([
+        api.get("/api/account/balance/"),
+        api.get("/api/transactions/"),
+      ]);
+      setBalance(balanceRes.data.balance);
+      setCardNumber(balanceRes.data.card_number || balanceRes.data.card_number);
+      setTransactions(transRes.data);
+    } catch (error: any) {
+      console.error("Xatolik yuz berdi:", error.response?.data || error.message);
+      alert("Ma’lumotlarni yuklashda xatolik yuz berdi!");
     }
+  };
 
-    const fetchData = async () => {
-      try {
-        const [balanceRes, transRes] = await Promise.all([
-          api.get("/api/account/balance/"), // api.ts ishlatildi, headers qo‘shish shart emas
-          api.get("/api/transactions/"), // api.ts ishlatildi
-        ]);
-        setBalance(balanceRes.data.balance);
-        setCardNumber(balanceRes.data.card_number);
-        setTransactions(transRes.data);
-      } catch (error) {
-        console.error("Xatolik yuz berdi:", error);
-        alert("Ma’lumotlarni yuklashda xatolik yuz berdi!");
-      }
-    };
-
-    fetchData();
-  }, [accessToken, navigate]);
+  fetchData();
+}, [accessToken, navigate]);
 
   const handleTransferRequest = async () => {
     try {

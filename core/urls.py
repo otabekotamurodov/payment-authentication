@@ -16,7 +16,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
 
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="PayAuth API",
+        default_version='v1',
+        description="Telegram + Face ID to‘lov tizimi API hujjatlari",
+        contact=openapi.Contact(email="admin@payauth.uz"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.users.urls')),  # Bu orqali auth APIlar ishlaydi
@@ -24,4 +38,8 @@ urlpatterns = [
     path('api/transactions/', include('apps.transactions.urls')),
     path("api/transactions/", include("apps.transactions.urls")),
     path("api/webauthn/", include("apps.web_authn.urls")),
+
+    # Swagger URL’lar
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

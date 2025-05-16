@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Card
 from decimal import Decimal
+from rest_framework.permissions import IsAuthenticated
 
 
 class TestProtectedView(APIView):
@@ -98,12 +99,13 @@ class TransferView(APIView):
 
 
 class BalanceView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         card = Card.objects.filter(user=request.user).first()
         if not card:
             return Response({"error": "Sizda hech qanday karta mavjud emas"}, status=404)
-
         return Response({
             "card_number": card.card_number,
-            "balance": card.balance
+            "balance": float(card.balance)  # Decimal -> float ga o‘zgartirish
         }, status=200)
