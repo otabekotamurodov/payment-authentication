@@ -14,7 +14,7 @@ export default defineConfig({
             '/api': 'http://localhost:8000'
         },
         host: true, // bu albatta bo'lishi kerak
-        port: 5174, // sening local frontend porting
-        allowedHosts: ['.ngrok-free.app'], // barcha ngrok subdomenlarini ruxsat beramiz
+        port: 5174, // sening local frontaend porting
+        allowedHosts: ['.trycloudflare.com'], // barcha ngrok subdomenlarini ruxsat beramiz
     },
 })

@@ -27,15 +27,27 @@ def get_ngrok_urls():
     return frontend_url, api_url
 
 def update_env_file(frontend_url, api_url):
-    load_dotenv(ENV_PATH)
+    lines = []
+    if os.path.exists(ENV_PATH):
+        with open(ENV_PATH, 'r') as f:
+            lines = f.readlines()
 
-    if frontend_url:
-        set_key(ENV_PATH, 'VITE_FRONTEND_URL', frontend_url)
-        print(f"✅ VITE_FRONTEND_URL updated to: {frontend_url}")
+    env_dict = {}
+    for line in lines:
+        if '=' in line:
+            k, v = line.strip().split('=', 1)
+            env_dict[k] = v
 
-    if api_url:
-        set_key(ENV_PATH, 'VITE_API_URL', api_url)
-        print(f"✅ VITE_API_URL updated to: {api_url}")
+    # Yangilash yoki qo‘shish
+    env_dict['VITE_FRONTEND_URL'] = frontend_url
+    env_dict['VITE_API_URL'] = api_url
+
+    with open(ENV_PATH, 'w') as f:
+        for k, v in env_dict.items():
+            f.write(f"{k}={v}\n")
+
+    print(f"✅ VITE_FRONTEND_URL={frontend_url}")
+    print(f"✅ VITE_API_URL={api_url}")
 
 if __name__ == "__main__":
     frontend_url, api_url = get_ngrok_urls()
